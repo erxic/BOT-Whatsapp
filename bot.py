@@ -4,11 +4,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pickle
 import time
-from webdriver_manager.chrome import ChromeDriverManager
+import selenium.webdriver.chrome.service as service
 
 # Constants
 file_nomor = "nomor.txt"
-CHROMEDRIVER_PATH = "C:\chromeDriver\chromedriver.exe"
 MESSAGE_BOX_XPATH = '//div[@class="_3FRCZ copyable-text selectable-text"][@data-tab="6"]'
 SEND_BUTTON_XPATH = '//button[@class="_3M-N-"]'
 
@@ -32,6 +31,7 @@ def read(file_nomor):
 
 def send(driver, phone_number, message):
     ##mengirim pesan dan mencari element message box
+    
     driver.get(f'https://web.whatsapp.com/send?phone={phone_number}')
     time.sleep(5)
     try:
@@ -51,7 +51,8 @@ def main():
     ## pesan dari user
     message = input("Masukkan pesan: ")
     ## Inisialisasi driver dan set cookies
-    driver = webdriver.Chrome(ChromeDriverManager().install())
+    serv = service.Service('C:\chromeDriver\chromedriver.exe')
+    driver = webdriver.Chrome(service=serv)
     set_cookies(driver, get_cookies(driver))
     ## mengirim pesan ke setiap nomor
     for phone_number in phone_numbers:
