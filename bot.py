@@ -6,11 +6,14 @@ import pickle
 import time
 
 file_nomor = "nomor.txt"
-CHROMEDRIVER_PATH = "C:\chromeDriver"
+CHROMEDRIVER_PATH = "C:\chromeDriver\chromedriver.exe"
 MESSAGE_BOX_XPATH = '//div[@class="_3FRCZ copyable-text selectable-text"][@data-tab="6"]'
 SEND_BUTTON_XPATH = '//button[@class="_3M-N-"]'
 
+# mendapatkan cookie
 def get_cookies(driver):
+    driver.get('https://web.whatsapp.com/')
+    input("Scan QR code kemudian tekan enter ")
     pickle.dump(driver.get_cookies(), open('cookies.pkl', 'wb'))
     return pickle.load(open('cookies.pkl', 'rb'))
 
@@ -27,29 +30,27 @@ def read():
         return file.readlines()
 
 def send(driver, phone_number, message):
-    # membuka halaman dengan nomor tertentu
     driver.get(f'https://web.whatsapp.com/send?phone={phone_number}')
     time.sleep(5)
-    # mencari message box dan mengirim pesan
-    wait = WebDriverWait(driver, 30)
-    wait.until(EC.presence_of_element_located((By.XPATH, MESSAGE_BOX_XPATH)))
-    message_box = driver.find_element_by_xpath(MESSAGE_BOX_XPATH)
-    message_box.send_keys(message)
-    send_button = driver.find_element_by_xpath(SEND_BUTTON_XPATH)
-    send_button.click()
-    time.sleep(3)
+    try:
+        wait = WebDriverWait(driver, 30)
+        wait.until(EC.presence_of_element_located((By.XPATH, MESSAGE_BOX_XPATH)))
+        message_box = driver.find_element_by_xpath(MESSAGE_BOX_XPATH)
+        message_box.send_keys(message)
+        send_button = driver.find_element_by_xpath(SEND_BUTTON_XPATH)
+        send_button.click()
+        time.sleep(5)
+    except Exception:
+        print(f"Error sending message to {phone_number}")
 
 def main():
     # membaca nomor
     phone_numbers = read()
-    #pesan dari user
+    # pesan dari user
     message = input("Masukkan pesan: ")
     # menginisialisasi driver dan membuka whatsapp web
-    driver = webdriver.Chrome(CHROMEDRIVER_PATH,options=option())
-    driver.get('https://web.whatsapp.com/'),
+    driver = webdriver.Chrome(CHROMEDRIVER_PATH, options=option())
     set_cookies(driver, get_cookies(driver))
-    # menunggu hingga user login
-    input("tekan enter setelah scan QR code ")
     # mengirim pesan ke setiap nomor
     for phone_number in phone_numbers:
         send(driver, phone_number, message)
