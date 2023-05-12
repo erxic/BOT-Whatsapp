@@ -1,5 +1,4 @@
 # BOT-Whatsapp
-Author: Tron
 
 Bot ini sangat cocok untuk pebisnis online karena mempunyai fitur untuk mengirim pesan/promosi ke client hanya dalam satu perintah untuk 2 atau bahkan sampai 100 nomor 
 sekaligus tanpa perlu menyimpan nomor tersebut, tetapi memiliki delay beberapa detik selama mengirim pesan untuk menghindari pemblokiran oleh pihak whatsapp. 
