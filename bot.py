@@ -2,10 +2,7 @@ import pywhatkit as pwk
 import pyautogui
 from tkinter import Tk
 from tkinter.filedialog import askopenfilename
-import cv2
-import numpy as np
-import pyzbar.pyzbar as pyzbar
-import time
+
 
 #Fungsi membaca nomor dari file
 def read_numbers(file_name):
@@ -17,29 +14,11 @@ def read_message(file_name):
     with open(file_name, mode="r",encoding="utf-8") as file:
         return file.read()
     
-def is_whatsapp_logged_in():
-    # Tangkap screenshot layar
-    screenshot = pyautogui.screenshot()
-    screenshot_array = np.array(screenshot)
-
-    # Ubah ke format grayscale
-    gray = cv2.cvtColor(screenshot_array, cv2.COLOR_BGR2GRAY)
-
-    # Deteksi QR code
-    barcodes = pyzbar.decode(gray)
-
-    # Jika ada QR code yang terdeteksi, pengguna belum login
-    if barcodes:
-        return False
-
-    return True
 
 #fungsi untuk mengirim pesan 
 def send_message(numbers, message):
     for number in numbers:
         try:
-            while not is_whatsapp_logged_in():
-                time.sleep(1)
             pwk.sendwhatmsg_instantly(number, message, tab_close=True)
             pyautogui.press("enter")
         except Exception as e:
@@ -68,15 +47,12 @@ def main():
     while not message:
         print("Pesan tidak boleh kosong!")
         message = read_message(message_file)
-        # Tunggu hingga pengguna login
     
     send_stat = send_message(numbers, message)
     if send_stat:
         print("Pesan berhasil terkirim")
     else:
         print("Pesan gagal terkirim")
-    while is_whatsapp_logged_in():
-        time.sleep(1)
 
 if __name__ == '__main__':
     main()
