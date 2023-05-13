@@ -16,7 +16,7 @@ atau jika tidak mempunyai git bisa mendownload langsung dalam format zip.
 
 Masuk kedalam direktori BOT-Whatsapp dengan perintah berikut:
 
-- Di Linux `cd BOT-Whatsapp`
+- Di Mac/linux `cd BOT-Whatsapp`
 - Di Windows `cd .\BOT-Whatsapp\`
 
 Terdapat 3 File yang harus diperhatikan:
@@ -34,7 +34,7 @@ Ubah isi file _pesan.txt_ dengan pesan yang anda sampaikan atau produk yang ingi
 
 Jika isi dari file _nomor.txt_ dan _pesan.txt_ sudah sesuai dengan yang anda inginkan, sekarang jalankan programnya diterminal dengan perintah dibawah ini (pastikan direktorinya berada pada Bot_Whatsapp):
 
-- Di linux  `python bot.py`
+- Di Mac/linux  `python bot.py`
 - Di Windows  `python.exe .\bot.py`
 
 - pilih file _Nomor.txt_ terlebih dahulu (***INI WAJIB FILE NOMOR***)
