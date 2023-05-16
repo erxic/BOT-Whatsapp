@@ -3,8 +3,9 @@ import pyautogui
 import time
 from bs4 import BeautifulSoup
 from urllib.request import Request, urlopen
-import urllib.parse
+import urllib, urllib.parse
 from tkinter import Tk, filedialog, messagebox, Button, Label, Text, PhotoImage, END
+
 
 def read_numbers(file_name):
     with open(file_name, mode="r") as file:
@@ -14,25 +15,25 @@ def read_message(file_name):
     with open(file_name, mode="r", encoding="utf-8") as file:
         return file.read()
 
-def get_first_number():
-    numbers_file = numbers_text.get("1.0", END).strip() # Ambil nama file dari teks
+# Fungsi mengambil nomor pertama untuk pengecekan 
+def get_first_number(numbers_file):
     numbers = read_numbers(numbers_file)
     if not numbers:
         print("Error: File nomor kosong!")
         return None
-    return numbers[0] if numbers else None
+    return numbers[0]
 
-def get_message():
-    message_file = message_text.get("1.0", END).strip() # Ambil nama file dari teks
+# Fungsi mengambil pesan untuk pengecekan 
+def get_message(message_file):
     message = read_message(message_file)
     if not message:
         print("Error: File Pesan kosong!")
         return None
     return message
 
-def wait_for_whatsapp_web():
-    phone_in_url = get_first_number() # Ambil nomor dari fungsi
-    message_in_url = get_message() # Ambil pesan dari fungsi
+
+# Fungsi untuk mengecek apakah whatsapp web sudah siap untuk berinteraksi secara penuh
+def wait_for_whatsapp_web(phone_in_url, message_in_url):
     while True:
         try:
             encoded_message = urllib.parse.quote(message_in_url)
@@ -48,8 +49,13 @@ def wait_for_whatsapp_web():
             print(f"Error: {e}")
             continue
 
+
 def send_message(numbers, message):
-    wait_for_whatsapp_web()
+    phone_in_url = get_first_number(numbers)
+    message_in_url = get_message(message)
+    if not message_in_url:
+        return False
+    wait_for_whatsapp_web(phone_in_url, message_in_url)
     time.sleep(3)
     for number in numbers:
         try:
@@ -60,9 +66,10 @@ def send_message(numbers, message):
             return False
     return True
 
-def send_and_notify():
-    numbers_file = numbers_text.get("1.0", END).strip() # Ambil nama file dari teks
-    message_file = message_text.get("1.0", END).strip() # Ambil nama file dari teks
+# Send pada GUI dan Info
+def send_and_info():
+    numbers_file = numbers_text.get("1.0", END).strip()
+    message_file = message_text.get("1.0", END).strip()
     if not numbers_file:
         print("Error: File nomor tidak dipilih.")
         return
@@ -71,31 +78,33 @@ def send_and_notify():
         return
     numbers = read_numbers(numbers_file)
     message = read_message(message_file)
-    while not message:
-        print("Error: Pesan tidak boleh kosong.")
-        return False
-    confirm = messagebox.askquestion("Konfirmasi", "Anda yakin ingin mengirim pesan?")
-    if confirm == "yes":
-        send_stat = send_message(numbers, message)
-        if send_stat:
-            print("Informasi", "Pesan berhasil terkirim.")
+    send_stat = False
+    while not send_stat:
+        if not message:
+            print("Error: Pesan tidak boleh kosong.")
+            break
+        confirm = messagebox.askquestion("Konfirmasi", "Anda yakin ingin mengirim pesan?")
+        if confirm == "yes":
+            send_stat = send_message(numbers, message)
+            if send_stat:
+                print("Informasi", "Pesan berhasil terkirim.")
+            else:
+                messagebox.showerror("Error", "Pesan gagal terkirim.")
         else:
-            messagebox.showerror("Error", "Pesan gagal terkirim.")
-    else:
-        messagebox.showinfo("Informasi", "Pesan dibatalkan.")
+            messagebox.showinfo("Informasi", "Pesan dibatalkan.")
 
 def choose_numbers_file():
     file_path = filedialog.askopenfilename(title="Pilih File Nomor", filetypes=[("Text Files", "*.txt")])
     numbers_text.delete("1.0", END)
     numbers_text.insert(END, file_path)
 
-# Fungsi untuk memilih file pesan
+
 def choose_message_file():
     file_path = filedialog.askopenfilename(title="Pilih File Pesan", filetypes=[("Text Files", "*.txt")])
     message_text.delete("1.0", END)
     message_text.insert(END, file_path)
 
-# Membuat GUI
+# GUI
 window = Tk()
 window.title("Aplikasi Pengiriman Pesan WhatsApp")
 window.geometry("650x300")
@@ -122,7 +131,7 @@ message_text.pack()
 message_button = Button(window, text="Pilih", command=choose_message_file)
 message_button.pack()
 
-send_button = Button(window, activeforeground="green", text="Kirim Pesan", command=send_and_notify)
+send_button = Button(window, activeforeground="green", text="Kirim Pesan", command=send_and_info)
 send_button.pack()
 
 window.mainloop()
