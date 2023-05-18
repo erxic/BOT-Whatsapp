@@ -41,10 +41,8 @@ def wait_for_whatsapp_web(phone_in_url, message_in_url):
 def send_message(numbers, message):
     if not numbers:
         return False
-    
     num_in = numbers[0] 
     mess_in = message
-        
     wait_for_whatsapp_web(num_in, mess_in)
     time.sleep(2)
     for number in numbers:
@@ -124,3 +122,4 @@ send_button = Button(window, activeforeground="green", text="Kirim Pesan", comma
 send_button.pack()
 
 window.mainloop()
+
