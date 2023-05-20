@@ -31,6 +31,7 @@ Ubah isi file _pesan.txt_ dengan pesan yang anda sampaikan atau produk yang ingi
 **PASTIKAN SUDAH LOGIN PADA WHATSAPP WEB ANDA**
 
 **Lewat Terminal**
+
 Jika isi dari file _nomor.txt_ dan _pesan.txt_ sudah sesuai dengan yang anda inginkan, sekarang jalankan programnya diterminal dengan perintah dibawah ini (pastikan direktorinya berada pada Bot_Whatsapp):
 
 - Di Mac/linux  `python bot.py`
