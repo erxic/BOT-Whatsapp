@@ -1,4 +1,5 @@
 import pywhatkit as pwk
+import os
 import pyautogui
 import time
 from bs4 import BeautifulSoup
@@ -47,7 +48,7 @@ def send_message(numbers, message):
     time.sleep(2)
     for number in numbers:
         try:
-            pwk.sendwhatmsg_instantly(number, message, wait_time=15, tab_close=True)
+            pwk.sendwhatmsg_instantly(number, message, tab_close=True)
             pyautogui.press("enter")
         except Exception as e:
             print(f"Error: {e}")
@@ -95,7 +96,10 @@ def choose_file(file_text):
 window = Tk()
 window.title("Aplikasi Pengiriman Pesan WhatsApp")
 window.geometry("650x300")
-bg_image = PhotoImage(file="E:\BOT\img\Black-Gradiant.png")
+user_path = os.getcwd()
+image_file_path = os.path.join(user_path, "img", "Black-Gradiant.png")
+bg_image = PhotoImage(file=image_file_path)
+
 
 bg_label = Label(window, image=bg_image)
 bg_label.place(x=0, y=0, relwidth=1, relheight=1)
@@ -123,3 +127,4 @@ send_button.pack()
 
 window.mainloop()
 
+        
