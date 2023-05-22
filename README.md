@@ -5,8 +5,6 @@ sekaligus tanpa perlu menyimpan nomor tersebut, tetapi memiliki delay beberapa d
 
 ## Set-Up
 
-**Pastikan sudah menginstall Python di komputer anda**
-
 Jalankan perintah seperti dibawah ini pada terminal komputer anda:
 
 `git clone https://github.com/Tron403/BOT-Whatsapp.git`
@@ -32,6 +30,8 @@ Ubah isi file _pesan.txt_ dengan pesan yang anda sampaikan atau produk yang ingi
 ## Cara Pakai
 **PASTIKAN SUDAH LOGIN PADA WHATSAPP WEB ANDA**
 
+**Lewat Terminal**
+
 Jika isi dari file _nomor.txt_ dan _pesan.txt_ sudah sesuai dengan yang anda inginkan, sekarang jalankan programnya diterminal dengan perintah dibawah ini (pastikan direktorinya berada pada Bot_Whatsapp):
 
 - Di Mac/linux  `python bot.py`
@@ -40,5 +40,6 @@ Jika isi dari file _nomor.txt_ dan _pesan.txt_ sudah sesuai dengan yang anda ing
 - pilih file _Nomor.txt_ terlebih dahulu (***INI WAJIB FILE NOMOR***)
 - Kemudian baru pilih file _pesan.txt_ 
 
-Pesan akan terkirim secara otomatis lewat Whatsapp web
+**Lewat file .EXE**
 
+Jika ingin membuka program lewat file .exe pergi ke folder _bot-exe_, lalu cari file bernama _bot.exe_ cukup double klick pada file tersebut maka program akan dijalankan, atau jika tidak ingin ribet masuk ke dalam folder tersebut maka cari file bernama _bot.exe.lnk_/file shortcut dari bot.exe, lalu copy kan file tersebut ke desktop jadi program bisa langsung dijalankan lewat desktop
