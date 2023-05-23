@@ -96,9 +96,7 @@ def choose_file(file_text):
 window = Tk()
 window.title("Aplikasi Pengiriman Pesan WhatsApp")
 window.geometry("650x300")
-user_path = os.getcwd()
-image_file_path = os.path.join(user_path, "img", "Black-Gradiant.png")
-bg_image = PhotoImage(file=image_file_path)
+bg_image = PhotoImage(file=".\img\Black-Gradiant.png")
 
 
 bg_label = Label(window, image=bg_image)
